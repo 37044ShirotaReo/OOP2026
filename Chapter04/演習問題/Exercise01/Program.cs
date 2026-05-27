@@ -50,7 +50,10 @@ namespace Exercise01 {
             Console.WriteLine("\n --- 4.1.2 ---");
             //LINQを使用する（Where）
 
-            
+            var result = langs.Where(lang => lang.Contains("S"));
+            foreach (var lang in result) {
+                Console.WriteLine(lang);
+            }
         }
 
         private static void Exercise3(List<string> langs) {
