@@ -37,21 +37,20 @@ namespace Exercise01 {
             //while文
             Console.WriteLine("\nwhile文で出力");
 
-            int j = 0;
-            while (j < langs.Count) {
-                if (langs[j].Contains("S")) {
-                    Console.WriteLine(langs[j]);
+            int count = 0;
+            while (count < langs.Count) {
+                if (langs[count].Contains("S")) {
+                    Console.WriteLine(langs[count]);
                 }
-                j++;
+                count++;
             }
         }
 
         private static void Exercise2(List<string> langs) {
             Console.WriteLine("\n --- 4.1.2 ---");
             //LINQを使用する（Where）
-
-            var result = langs.Where(lang => lang.Contains("S"));
-            foreach (var lang in result) {
+            var selected = langs.Where(lang => lang.Contains("S"));
+            foreach (var lang in selected) {
                 Console.WriteLine(lang);
             }
         }
