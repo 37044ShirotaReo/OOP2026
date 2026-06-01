@@ -1,17 +1,27 @@
-﻿namespace Section01 {
+﻿using System.Collections.Immutable;
+
+namespace Section01 {
     internal class Program {
         static void Main(string[] args) {
-            var obj = new PasswordPolicy("aaaaa", "bbbbb");
-            var data = obj.Name;
+            //var obj = new PasswordPolicy("aaaaa", "bbbbb");
+            //var data = obj.Name;
 
+            var ms = new MySample();
+            //変更不可のオブジェクトなので、Add、RemoveAtは新たなインスタンスを返す
+            var newList = ms.MyList.Add(6).RemoveAt(0);
+            ms.MyList.ForEach(n => Console.Write($"{n}"));
+            Console.WriteLine();   //改行
 
+            newList.ForEach(n => Console.Write($"{n}"));
+            Console.WriteLine();   //改行
         }
     }
     class MySample {
-        public List<int> MyList { get; private set; }
+        public ImmutableList<int> MyList { get; private set; }
 
         public MySample() {
-            MyList = new List<int>() { 1, 2, 3, 4, 5 };
+            var list = new List<int>() { 1, 2, 3, 4, 5 };
+            MyList = list.ToImmutableList();
         }
     }
 
