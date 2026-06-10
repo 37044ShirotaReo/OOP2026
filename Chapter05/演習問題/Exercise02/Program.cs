@@ -50,11 +50,17 @@ namespace Exercise02 {
             else {
                 Console.WriteLine("21世紀のデータはありません");
             }
+
+            //できた人は、null合体演算子、null条件演算子を使って一行で記述せよ
+            Console.WriteLine(FindFirst21C(ymCollection)?.ToString() ?? "21世紀のデータはありません");
         }
 
         //5.2.5
         private static void Exercise5(YearMonth[] ymCollection) {
-            
+            YearMonth[] result = ymCollection.Select(x => x.AddOneMonth()).ToArray();
+            foreach(var item in result) {
+                Console.WriteLine(item);
+            }
         }
     }
 }
