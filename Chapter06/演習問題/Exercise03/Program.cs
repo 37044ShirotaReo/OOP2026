@@ -1,5 +1,6 @@
 ﻿
 using System.ComponentModel.DataAnnotations;
+using System.Text;
 
 namespace Exercise03 {
     internal class Program {
@@ -42,7 +43,15 @@ namespace Exercise03 {
         }
 
         private static void Exercise3(string text) {
-            //やらなくてよい
+            var array = text.Split(' ');
+            var sb = new StringBuilder();
+            foreach (var word in array) {
+                if (sb.Length > 0) {
+                    sb.Append(" ");
+                }
+                sb.Append(word);
+            }
+            Console.WriteLine(sb + ".");
         }
 
         private static void Exercise4(string text) {
