@@ -42,11 +42,14 @@ namespace Exersice01 {
         }
 
         private static void Exercise4(int[] numbers) {
-
+            var sortedNumbers = numbers.OrderBy(x => x).Take(3);
+            foreach (var number in sortedNumbers) {
+                Console.WriteLine(number);
+            }
         }
 
         private static void Exercise5(int[] numbers) {
-
+            
         }
     }
 }
