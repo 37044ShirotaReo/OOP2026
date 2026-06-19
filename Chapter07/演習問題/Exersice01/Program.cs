@@ -28,11 +28,14 @@ namespace Exersice01 {
         }
 
         private static void Exercise2(int[] numbers) {
-            
+            var results = numbers.Where(x => 0 <= x).TakeLast(2);
+            foreach (var number in results) {
+                Console.WriteLine(number);
+            }
         }
 
         private static void Exercise3(int[] numbers) {
-
+            
         }
 
         private static void Exercise4(int[] numbers) {
