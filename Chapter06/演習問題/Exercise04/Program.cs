@@ -5,10 +5,8 @@ namespace Exercise04 {
         static void Main(string[] args) {
             var line = "Novelist=谷崎潤一郎;BestWork=春琴抄;Born=1886";
 
-            var array = line.Split(";");
-
-            foreach(var word in array) {
-                var words = word.Split("=");
+            foreach(var item in line.Split(';')) {
+                var words = item.Split("=");
 
                 Console.WriteLine($"{ToJapanese(words[0])}:{words[1]}");
             }
@@ -20,7 +18,7 @@ namespace Exercise04 {
         }
         static string ToJapanese(string key) {
             return key switch {
-                "Novelist" => "作家",
+                "Novelist" => "作家　",
                 "BestWork" => "代表作",
                 "Born" => "誕生年",
                 _ => "引数keyは、正しい値ではありません"
