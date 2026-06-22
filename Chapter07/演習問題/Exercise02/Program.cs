@@ -46,12 +46,12 @@ namespace Exercise02 {
         }
 
         private static void Exercise2(List<Book> books) {
-            var result = books.Where(x => x.Title.Contains("C#")).Count();
-            Console.WriteLine(result);
+            Console.WriteLine(books.Where(x => x.Title.Contains("C#")));
         }
 
         private static void Exercise3(List<Book> books) {
-            
+            var average = books.Where(b => b.Title.Contains("C#")).Average(b => b.Pages);
+            Console.WriteLine(average);
         }
 
         private static void Exercise4(List<Book> books) {
