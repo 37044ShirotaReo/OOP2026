@@ -9,28 +9,17 @@
 
         //メソッドの概要：
         private static IEnumerable<Student> ReadScore(string filePath) {
-            var sales = new List<Student>();
+            var students = new List<Student>();
             var lines = File.ReadAllLines(filePath);
             
-
-
-
-
-
-
-
-            return sales;
+            return students;
         }
 
         //メソッドの概要：
         public IDictionary<string, int> GetPerStudentScore() {
             var dict = new Dictionary<string, int>();
 
-
-
-
-
-
+            
             return dict;
         }
     }
