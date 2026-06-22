@@ -25,6 +25,7 @@
             var page = books.Where(x => 250 <= x.Pages).Take(3);
             foreach (var book in page) {
                 Console.WriteLine(book.Title);
+
             }
 
         }
