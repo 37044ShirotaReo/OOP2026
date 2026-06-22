@@ -1,5 +1,6 @@
 ﻿using Section01;
-using System.Diagnostics.Tracing;    //Section01プロジェクトにあるBookクラスを利用
+using System.Diagnostics.Tracing;
+using System.Security.Cryptography.X509Certificates;    //Section01プロジェクトにあるBookクラスを利用
 
 namespace Exercise02 {
     internal class Program {
@@ -45,7 +46,8 @@ namespace Exercise02 {
         }
 
         private static void Exercise2(List<Book> books) {
-            
+            var result = books.Where(x => x.Title.Contains("C#")).Count();
+            Console.WriteLine(result);
         }
 
         private static void Exercise3(List<Book> books) {
