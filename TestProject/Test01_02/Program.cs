@@ -61,7 +61,7 @@
         //問題１　合計値を表示（式形式で記述せよ）
         //　　　　出力結果【618】
         private static void Exercise01(int[] numbers) {
-
+            //var sum =numbers.
         }
 
 
