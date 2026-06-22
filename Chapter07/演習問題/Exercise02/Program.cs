@@ -46,7 +46,7 @@ namespace Exercise02 {
         }
 
         private static void Exercise2(List<Book> books) {
-            Console.WriteLine(books.Where(x => x.Title.Contains("C#")));
+            Console.WriteLine(books.Where(b => b.Title.Contains("C#")));
         }
 
         private static void Exercise3(List<Book> books) {
@@ -61,7 +61,8 @@ namespace Exercise02 {
         }
 
         private static void Exercise5(List<Book> books) {
-            
+            var max = books.Where(b => b.Price < 4000).Max(b => b.Pages);
+            Console.WriteLine(max);
         }
 
         private static void Exercise6(List<Book> books) {
