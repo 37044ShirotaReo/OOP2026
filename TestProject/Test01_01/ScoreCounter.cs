@@ -1,4 +1,7 @@
-﻿namespace Test01_01 {
+﻿using System.Net.Sockets;
+using static System.Formats.Asn1.AsnWriter;
+
+namespace Test01_01 {
     public class ScoreCounter {
         private IEnumerable<Student> _score;
 
@@ -26,11 +29,11 @@
         //メソッドの概要：
         public IDictionary<string, int> GetPerStudentScore() {
             var dict = new Dictionary<string, int>();
-            foreach (var student in _score) {
-                if (dict.ContainsKey(student.Subject))
-                    dict[student.Subject] += student.Score;
+            foreach (var score in _score) {
+                if (dict.ContainsKey(score.Subject))
+                    dict[score.Subject] += score.Score;
                 else
-                    dict[student.Subject] = student.Score; 
+                    dict[score.Subject] = score.Score; 
             }
 
 

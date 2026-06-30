@@ -60,16 +60,12 @@
 
         //問題１　合計値を表示（式形式で記述せよ）
         //　　　　出力結果【618】
-        private static void Exercise01(int[] numbers) {
-            //var sum =numbers.
-        }
+        private static void Exercise01(int[] numbers) => Console.WriteLine(numbers.Sum());
 
 
         //問題２　偶数の最大値を表示（式形式で記述せよ）
         //　　　　出力結果【94】
-        private static void Exercise02(int[] numbers) {
-
-        }
+        private static void Exercise02(int[] numbers) => Console.WriteLine(numbers.Max());
 
 
         //問題３　昇順に並べて表示（遅延実行とする）
@@ -138,6 +134,7 @@
         //          New Delhi : 9文字
         //          Hong Kong : 9文字】
         private static void Exercise09(List<string> cities) {
+            
         
         
         
