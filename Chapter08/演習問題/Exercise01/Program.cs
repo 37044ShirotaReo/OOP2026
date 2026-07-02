@@ -15,12 +15,12 @@ namespace Exercise01 {
             //コミットのコメント (問題8.1.1完成)
             var dict = new Dictionary<char, int>();
             
-            foreach (char c in text.ToUpper()) {
-                if('A' <= c && c <= 'Z') {
-                    if (dict.ContainsKey(c)) {
-                        dict[c]++;
+            foreach (char ch in text.ToUpper()) {
+                if('A' <= ch && ch <= 'Z') {
+                    if (dict.ContainsKey(ch)) {
+                        dict[ch]++;
                     } else {
-                        dict[c] = 1;
+                        dict[ch] = 1;
                     }
                 }
 
@@ -31,8 +31,22 @@ namespace Exercise01 {
         }
 
         private static void Exercise2(string text) {
-            //コミットのコメント (問題8.2.1完成)
-            
+            //コミットのコメント (問題8.1.2完成)
+            var dict = new SortedDictionary<char, int>();
+
+            foreach (char ch in text.ToUpper()) {
+                if ('A' <= ch && ch <= 'Z') {
+                    if (dict.ContainsKey(ch)) {
+                        dict[ch]++;
+                    } else {
+                        dict[ch] = 1;
+                    }
+                }
+
+            }
+            foreach (var item in dict) {
+                Console.WriteLine("{0}:{1}",item.Key,item.Value);
+            }
         }
     }
 }
