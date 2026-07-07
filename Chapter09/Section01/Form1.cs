@@ -20,10 +20,15 @@ namespace Section01 {
             //    age--;
             //}
 
+            var culture = new CultureInfo("ja-JP");
+            culture.DateTimeFormat.Calendar = new JapaneseCalendar();
+
+            var dayOfWeek = culture.DateTimeFormat.GetDayName(birth.DayOfWeek);
+
             TimeSpan ts = today.Date - birth.Date;
             tbOut.Text = $"あなたは{GetAge(birth, today)}歳です";
             tbOut2.Text = $"生まれてから{ts.Days}日目です";
-            tbOut3.Text = $"生まれた{birth.Month}月{birth.Day}日は第{NthWeek(birth)}週です";
+            tbOut3.Text = $"生まれた{birth.Month}月{birth.Day}日は第{NthWeek(birth)}週の{dayOfWeek}です";
         }
 
         //年齢を求めるメソッド
@@ -34,6 +39,7 @@ namespace Section01 {
             }
             return age;
         }
+        //指定した日が第何週かを求める
         static int NthWeek(DateTime date) {
             var firstDay = new DateTime(date.Year, date.Month, 1);
             var firstDayOfWeek = (int)(firstDay.DayOfWeek);
