@@ -29,6 +29,13 @@
             tbOut = new TextBox();
             nudDay = new NumericUpDown();
             label1 = new Label();
+            dtpBirth = new DateTimePicker();
+            btBirthCalc = new Button();
+            label2 = new Label();
+            label3 = new Label();
+            tbOut2 = new TextBox();
+            tbOut3 = new TextBox();
+            label4 = new Label();
             ((System.ComponentModel.ISupportInitialize)nudDay).BeginInit();
             SuspendLayout();
             // 
@@ -57,9 +64,9 @@
             // tbOut
             // 
             tbOut.Font = new Font("Yu Gothic UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 128);
-            tbOut.Location = new Point(30, 176);
+            tbOut.Location = new Point(67, 236);
             tbOut.Name = "tbOut";
-            tbOut.Size = new Size(348, 39);
+            tbOut.Size = new Size(311, 39);
             tbOut.TabIndex = 2;
             // 
             // nudDay
@@ -80,14 +87,83 @@
             label1.TabIndex = 4;
             label1.Text = "日後";
             // 
+            // dtpBirth
+            // 
+            dtpBirth.Font = new Font("Yu Gothic UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 128);
+            dtpBirth.Location = new Point(30, 180);
+            dtpBirth.Name = "dtpBirth";
+            dtpBirth.Size = new Size(200, 39);
+            dtpBirth.TabIndex = 1;
+            // 
+            // btBirthCalc
+            // 
+            btBirthCalc.Location = new Point(292, 180);
+            btBirthCalc.Name = "btBirthCalc";
+            btBirthCalc.Size = new Size(86, 39);
+            btBirthCalc.TabIndex = 5;
+            btBirthCalc.Text = "計算";
+            btBirthCalc.UseVisualStyleBackColor = true;
+            btBirthCalc.Click += btBirthCalc_Click;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(30, 253);
+            label2.Name = "label2";
+            label2.Size = new Size(31, 15);
+            label2.TabIndex = 6;
+            label2.Text = "年齢";
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(6, 298);
+            label3.Name = "label3";
+            label3.Size = new Size(55, 15);
+            label3.TabIndex = 7;
+            label3.Text = "経過日数";
+            // 
+            // tbOut2
+            // 
+            tbOut2.Font = new Font("Yu Gothic UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 128);
+            tbOut2.Location = new Point(67, 281);
+            tbOut2.Name = "tbOut2";
+            tbOut2.Size = new Size(311, 39);
+            tbOut2.TabIndex = 2;
+            // 
+            // tbOut3
+            // 
+            tbOut3.Font = new Font("Yu Gothic UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 128);
+            tbOut3.Location = new Point(67, 326);
+            tbOut3.Multiline = true;
+            tbOut3.Name = "tbOut3";
+            tbOut3.Size = new Size(311, 67);
+            tbOut3.TabIndex = 2;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(30, 343);
+            label4.Name = "label4";
+            label4.Size = new Size(24, 15);
+            label4.TabIndex = 7;
+            label4.Text = "メモ";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(400, 240);
+            ClientSize = new Size(400, 442);
+            Controls.Add(label4);
+            Controls.Add(label3);
+            Controls.Add(label2);
+            Controls.Add(btBirthCalc);
             Controls.Add(label1);
             Controls.Add(nudDay);
+            Controls.Add(tbOut3);
+            Controls.Add(tbOut2);
             Controls.Add(tbOut);
+            Controls.Add(dtpBirth);
             Controls.Add(dtpDate);
             Controls.Add(btGet);
             Name = "Form1";
@@ -104,5 +180,12 @@
         private TextBox tbOut;
         private NumericUpDown nudDay;
         private Label label1;
+        private DateTimePicker dtpBirth;
+        private Button btBirthCalc;
+        private Label label2;
+        private Label label3;
+        private TextBox tbOut2;
+        private TextBox tbOut3;
+        private Label label4;
     }
 }
