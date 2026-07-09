@@ -1,3 +1,5 @@
+using Microsoft.VisualBasic;
+using System.Diagnostics.Eventing.Reader;
 using System.Globalization;
 
 namespace Section01 {
@@ -20,15 +22,33 @@ namespace Section01 {
             //    age--;
             //}
 
+            tbOut.Text = $"‚ ‚È‚½‚Í{GetAge(birth, today)}Î‚Å‚·";
+
+            TimeSpan ts = today.Date - birth.Date;
+            tbOut2.Text = $"¶‚Ü‚ê‚Ä‚©‚ç{ts.Days}“ú–Ú‚Å‚·";
+
             var culture = new CultureInfo("ja-JP");
             culture.DateTimeFormat.Calendar = new JapaneseCalendar();
 
             var dayOfWeek = culture.DateTimeFormat.GetDayName(birth.DayOfWeek);
 
-            TimeSpan ts = today.Date - birth.Date;
-            tbOut.Text = $"‚ ‚È‚½‚Í{GetAge(birth, today)}Î‚Å‚·";
-            tbOut2.Text = $"¶‚Ü‚ê‚Ä‚©‚ç{ts.Days}“ú–Ú‚Å‚·";
             tbOut3.Text = $"¶‚Ü‚ê‚½{birth.Month}Œ{birth.Day}“ú‚Í‘æ{NthWeek(birth)}T‚Ì{dayOfWeek}‚Å‚·";
+
+            //¡”N‚Ì’a¶“ú‚ğì¬‚·‚é
+            DateTime thisYearBirthday = new DateTime(today.Year, birth.Month, birth.Day);
+            //Šù‚É’a¶“ú‚ª‰ß‚¬‚½‚©H
+            if(thisYearBirthday < today) {
+                //—ˆ”N‚Ì’a¶“ú‚ğì¬‚·‚é
+                thisYearBirthday = thisYearBirthday.AddYears(1);
+            }
+
+            var span = thisYearBirthday - today;
+
+            if (span.Days == 0) {
+                tbOut4.Text = $"¡“ú‚ª’a¶“ú‚Å‚·";
+            } else {
+                tbOut4.Text = $"’a¶“ú‚Ü‚Å‚ ‚Æ{span.Days}“ú‚Å‚·";
+            }
         }
 
         //”N—î‚ğ‹‚ß‚éƒƒ\ƒbƒh
@@ -45,5 +65,6 @@ namespace Section01 {
             var firstDayOfWeek = (int)(firstDay.DayOfWeek);
             return (date.Day + firstDayOfWeek - 1) / 7 + 1;
         }
+
     }
 }
