@@ -69,9 +69,9 @@
             // 
             // btReset
             // 
-            btReset.Location = new Point(74, 165);
+            btReset.Location = new Point(37, 152);
             btReset.Name = "btReset";
-            btReset.Size = new Size(75, 23);
+            btReset.Size = new Size(163, 44);
             btReset.TabIndex = 2;
             btReset.Text = "リセット";
             btReset.UseVisualStyleBackColor = true;
@@ -79,9 +79,9 @@
             // 
             // button1
             // 
-            button1.Location = new Point(246, 169);
+            button1.Location = new Point(217, 152);
             button1.Name = "button1";
-            button1.Size = new Size(120, 27);
+            button1.Size = new Size(163, 44);
             button1.TabIndex = 3;
             button1.Text = "ラップタイム";
             button1.UseVisualStyleBackColor = true;
@@ -91,9 +91,9 @@
             // 
             listBox1.FormattingEnabled = true;
             listBox1.ItemHeight = 15;
-            listBox1.Location = new Point(423, 48);
+            listBox1.Location = new Point(386, 22);
             listBox1.Name = "listBox1";
-            listBox1.Size = new Size(120, 94);
+            listBox1.Size = new Size(157, 169);
             listBox1.TabIndex = 4;
             // 
             // Form1
