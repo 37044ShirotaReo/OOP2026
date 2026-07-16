@@ -1,5 +1,4 @@
 using System.ComponentModel;
-using System.Diagnostics.Eventing.Reader;
 using static CarReportSystem.CarReport;
 
 namespace CarReportSystem {
@@ -12,43 +11,39 @@ namespace CarReportSystem {
             InitializeComponent();
             dgvRecords.DataSource = listCarReports;
         }
-
         //追加ボタンイベントハンドラ
         private void btAddRecord_Click(object sender, EventArgs e) {
 
-            tsslbMessage.Text = String.Empty; //メッセージ領域のクリア
+            tsslbMessage.Text = String.Empty;   //メッセージ領域のクリア
 
-            /*********************************/
-            //ここに、記録者と車名が未入力だった場合の処理を記述する
+            //記録者と車名が未入力だった場合は追加しない
+            //if(cbAuthor.Text == String.Empty || cbCarName.Text == String.Empty) {
             if (String.IsNullOrWhiteSpace(cbAuthor.Text) || String.IsNullOrWhiteSpace(cbCarName.Text)) {
                 tsslbMessage.Text = "記録者、または車名が未入力です";
                 return;
             }
-            tsslbMessage.Text = "入力されました";
-
-
-            /*********************************/
 
             var carReport = new CarReport {
                 Date = dtpDate.Value,
                 Author = cbAuthor.Text,
-                Maker = getRadioButtonMaker(),
+                Meker = GetRadioButtonMaker(),
                 CarName = cbCarName.Text,
                 Report = tbReport.Text,
                 Picture = pbPicture.Image,
-
             };
             listCarReports.Add(carReport);
 
-            ImputItemsAllClear();
+            SetCbAuthor(cbAuthor.Text);
+            SetCbCarName(cbCarName.Text);
+
+            ImputItemsAllClear();   //入力項目の全クリア
         }
 
-
-        private MakerGroup getRadioButtonMaker() {
+        private MakerGroup GetRadioButtonMaker() {
             if (rbToyota.Checked)
                 return MakerGroup.トヨタ;
             if (rbNissan.Checked)
-                return MakerGroup.ニッサン;
+                return MakerGroup.日産;
             if (rbHonda.Checked)
                 return MakerGroup.ホンダ;
             if (rbSubaru.Checked)
@@ -57,7 +52,6 @@ namespace CarReportSystem {
                 return MakerGroup.輸入車;
 
             return MakerGroup.その他;
-
         }
 
         private void btOpenPicture_Click(object sender, EventArgs e) {
@@ -68,11 +62,9 @@ namespace CarReportSystem {
 
         private void btNewInput_Click(object sender, EventArgs e) {
             ImputItemsAllClear();
-
-
         }
 
-        public void ImputItemsAllClear() {
+        private void ImputItemsAllClear() {
             dtpDate.Value = DateTime.Today;
             cbAuthor.Text = string.Empty;
             rbOther.Checked = true;
@@ -81,13 +73,56 @@ namespace CarReportSystem {
             pbPicture.Image = null;
         }
 
+        
+
         private void dgvRecords_Click(object sender, EventArgs e) {
+
+            if (dgvRecords.CurrentRow is null) ;
+
             dtpDate.Value = (DateTime)dgvRecords.CurrentRow.Cells["Date"].Value;
             cbAuthor.Text = (string)dgvRecords.CurrentRow.Cells["Author"].Value;
-
+            SetRadioButtonMaker((MakerGroup)dgvRecords.CurrentRow.Cells["Meker"].Value);
             cbCarName.Text = (string)dgvRecords.CurrentRow.Cells["CarName"].Value;
             tbReport.Text = (string)dgvRecords.CurrentRow.Cells["Report"].Value;
             pbPicture.Image = (Image)dgvRecords.CurrentRow.Cells["Picture"].Value;
+        }
+        
+        private void SetRadioButtonMaker(MakerGroup targetMaker) {
+            switch (targetMaker) {
+                case MakerGroup.トヨタ:
+                    rbToyota.Checked = true;
+                    break;
+                case MakerGroup.日産:
+                    rbNissan.Checked = true;
+                    break;
+                case MakerGroup.ホンダ:
+                    rbHonda.Checked = true;
+                    break;
+                case MakerGroup.スバル:
+                    rbSubaru.Checked = true;
+                    break;
+                case MakerGroup.輸入車:
+                    rbImport.Checked = true;
+                    break;
+
+                default:
+                    rbOther.Checked = true;
+                    break;
+            }
+
+        }
+
+        //記録者の入力履歴をコンボボックスへ登録(重複なし)
+        private void SetCbAuthor(string author) {
+            if (!cbAuthor.Items.Contains(author))
+                cbAuthor.Items.Add(author);
+            
+        }
+
+        //車名の入力履歴をコンボボックスへ登録(重複なし)
+        private void SetCbCarName(string carName) {
+            if (!cbAuthor.Items.Contains(carName))
+                cbAuthor.Items.Add(carName);
 
         }
     }
