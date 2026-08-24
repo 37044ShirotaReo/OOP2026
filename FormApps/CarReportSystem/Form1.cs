@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using System.Linq.Expressions;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Xml;
 using System.Xml.Serialization;
@@ -225,8 +226,12 @@ namespace CarReportSystem {
             }
         }
 
-        private void 保存ToolStripMenuItem_Click(object sender, EventArgs e) {
+        private void 保存ToolStripMenuItem_Click_1(object sender, EventArgs e) {
             reportSaveFile();
+        }
+
+        private void 開くToolStripMenuItem_Click(object sender, EventArgs e) {
+            reportOpenFile();
         }
 
         //ファイルセーブ処理
@@ -237,9 +242,9 @@ namespace CarReportSystem {
 #pragma warning disable SYSLIB0011
                     var bf = new BinaryFormatter();
 #pragma warning restore SYSLIB0011
-
-
-
+                    using (FileStream fs = File.Open(sfdReportFileSave.FileName, FileMode.Create)) {
+                        bf.Serialize(fs, listCarReports);
+                    }
                 }
                 catch (Exception ex) {
                     tsslbMessage.Text = "ファイル書き出しエラー";
@@ -250,12 +255,33 @@ namespace CarReportSystem {
 
         //ファイルオープン処理
         private void reportOpenFile() {
-
+            if(ofdReportFileOpen.ShowDialog() == DialogResult.OK) {
+                try {
+#pragma warning disable SYSLIB0011
+                    var bf = new BinaryFormatter();
+#pragma warning restore SYSLIB0011
+                    using (FileStream fs = File.Open(ofdReportFileOpen.FileName, FileMode.Open, FileAccess.Read)) {
+                        listCarReports = (BindingList<CarReport>)bf.Deserialize(fs);
+                        dgvRecords.DataSource = listCarReports;
+                    }
+                    //コンボボックスの履歴をすべて消す
+                    cbAuthor.Items.Clear();
+                    cbCarName.Items.Clear();
+                    foreach(var report in listCarReports) {
+                        SetCbAuthor(report.Author);
+                        SetCbCarName(report.CarName);
+                    }
+                }
+                catch (Exception ex) {
+                    tsslbMessage.Text = "ファイル読み出しエラー";
+                    MessageBox.Show(ex.Message);
+                }
+            }
 
 
 
         }
 
-
+        
     }
 }
