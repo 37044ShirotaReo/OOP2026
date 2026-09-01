@@ -175,7 +175,6 @@ partial class Form1
         Name = "Form1";
         StartPosition = FormStartPosition.CenterScreen;
         Text = "SQLite 商品管理サンプル";
-        Load += Form1_Load;
         ((System.ComponentModel.ISupportInitialize)dgvProducts).EndInit();
         statusStrip1.ResumeLayout(false);
         statusStrip1.PerformLayout();
