@@ -11,7 +11,7 @@ namespace CarReportSystem {
         BindingList<CarReport> listCarReports = new BindingList<CarReport>();
 
         //設定クラスのオブジェクトを生成
-        //Settings settings = Settings.Instance;
+        Settings settings = Settings.Instance;
 
         public Form1() {
             InitializeComponent();
