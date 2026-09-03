@@ -52,7 +52,7 @@ public partial class Form1 : Form {
             return;
 
         try {
-            //選択中の商品のオブジェクトのデータを更新する
+            //選択中の商品のオブジェクトのデータを更新する。
             selectedProduct.Name = name;
             selectedProduct.Price = price;
 
