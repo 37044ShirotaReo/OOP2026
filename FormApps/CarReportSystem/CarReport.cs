@@ -1,13 +1,12 @@
 ﻿using Microsoft.Data.Sqlite;
 
 namespace CarReportSystem {
-    [Serializable]
     public class CarReport {
         //列挙型
         public enum MakerGroup {
             なし, トヨタ, 日産, ホンダ, スバル, 輸入車, その他,
         }
-        [System.ComponentModel.DisplayName("日付")]
+        [System.ComponentModel.DisplayName("Id")]
         public int Id { get; set; }
         [System.ComponentModel.DisplayName("日付")]
         public DateTime Date { get; set; }      //日付

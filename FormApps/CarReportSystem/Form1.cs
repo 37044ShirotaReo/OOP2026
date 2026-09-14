@@ -1,5 +1,5 @@
+using SQLiteProductSample;
 using System.ComponentModel;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Xml;
 using System.Xml.Serialization;
 using static CarReportSystem.CarReport;
@@ -9,9 +9,11 @@ namespace CarReportSystem {
 
         //カーレポート管理用リスト
         BindingList<CarReport> listCarReports = new BindingList<CarReport>();
+        private readonly BindingList<CarReport> _carreports = new();
+        private readonly CarReportRepository _carreport = new();
 
         //設定クラスのオブジェクトを生成
-        Settings settings = Settings.Instance;
+        //Settings settings = Settings.Instance;
 
         public Form1() {
             InitializeComponent();
@@ -19,29 +21,18 @@ namespace CarReportSystem {
         }
 
         private void Form1_Load(object sender, EventArgs e) {
-            //設定ファイルを読み込み背景色を設定する（逆シリアル化）
-
-            //ファイルが存在するか？
-            if (File.Exists("setting.xml")) {
-                try {
-
-                    //P286以降を参考にする（ファイル名：setting.xml）
-                    using (var reader = XmlReader.Create("setting.xml")) {
-                        var serializer = new XmlSerializer(typeof(Settings));
-                        
-                        if(serializer.Deserialize(reader) is Settings loadedSettings) {
-                            settings = loadedSettings;
-                            //背景色設定
-                            BackColor = Color.FromArgb(Settings.Instance.MainFormBackColor);
-                        }
-                    }
+            try {
+                Settings.Instance.Load();
+                BackColor = Color.FromArgb(Settings.Instance.MainFormBackColor);
+                foreach(var report in _carreport.GetAll()) {
+                    SetCbAuthor(report.Author);
+                    SetCbCarName(report.CarName);
+                    listCarReports.Add(report);
                 }
-                catch (Exception ex) {
-                    tsslbMessage.Text = "設定ファイル読み込みエラー";
-                    MessageBox.Show(ex.Message);//←より具体的なエラーを出力         
-                }
-            } else {
-                tsslbMessage.Text = "設定ファイルがありません";
+            }
+            catch(Exception ex) {
+                tsslbMessage.Text = "設定ファイル読み込みエラー";
+                MessageBox.Show(ex.Message); // ←より具体的なエラーを出力
             }
         }
 
@@ -65,6 +56,10 @@ namespace CarReportSystem {
                 Report = tbReport.Text,
                 Picture = pbPicture.Image,
             };
+
+            var id = _carreport.Add(carReport);
+            carReport.Id = id;
+
             listCarReports.Add(carReport);
 
             //入力履歴を登録
@@ -157,9 +152,12 @@ namespace CarReportSystem {
                 tsslbMessage.Text = "削除するレポートを選択してください";
                 return;
             }
-            listCarReports.Remove(carReport);
 
+            _carreport.Delete(carReport.Id);
+            listCarReports.Remove(carReport);
             InputItemsUpdate(); //データグリッドビューを更新したら呼ぶメソッド
+
+
         }
         //データグリッドビューを更新したら呼ぶメソッド
         private void InputItemsUpdate() {
@@ -178,6 +176,8 @@ namespace CarReportSystem {
                 tsslbMessage.Text = "記録者、または車名が未入力です";
                 return;
             }
+
+            _carreport.Update(listCarReports[dgvRecords.CurrentRow.Index]);
 
             //カーレポート管理用リストの該当する要素のデータを書き換える
             listCarReports[dgvRecords.CurrentRow.Index].Date = dtpDate.Value.Date;
@@ -225,69 +225,12 @@ namespace CarReportSystem {
         private void Form1_FormClosed(object sender, FormClosedEventArgs e) {
             //設定ファイルへ色情報を保存する処理（シリアル化）
             //P284以降を参考にする（ファイル名：setting.xml）
+            Settings.Instance.Save();
 
-            using (var writer = XmlWriter.Create("setting.xml")) {
-                var serializer = new XmlSerializer(Settings.Instance.GetType());
-                serializer.Serialize(writer, Settings.Instance);
-            }
-        }
-
-        private void 保存ToolStripMenuItem_Click_1(object sender, EventArgs e) {
-            reportSaveFile();
-        }
-
-        private void 開くToolStripMenuItem_Click(object sender, EventArgs e) {
-            reportOpenFile();
-        }
-
-        //ファイルセーブ処理
-        private void reportSaveFile() {
-            if (sfdReportFileSave.ShowDialog() == DialogResult.OK) {
-                try {
-                    //バイナリ形式でシリアル化
-#pragma warning disable SYSLIB0011
-                    var bf = new BinaryFormatter();
-#pragma warning restore SYSLIB0011
-                    using (FileStream fs = File.Open(sfdReportFileSave.FileName, FileMode.Create)) {
-                        bf.Serialize(fs, listCarReports);
-                    }
-                }
-                catch (Exception ex) {
-                    tsslbMessage.Text = "ファイル書き出しエラー";
-                    MessageBox.Show(ex.Message);
-                }
-            }
-        }
-
-        //ファイルオープン処理
-        private void reportOpenFile() {
-            if(ofdReportFileOpen.ShowDialog() == DialogResult.OK) {
-                try {
-#pragma warning disable SYSLIB0011
-                    var bf = new BinaryFormatter();
-#pragma warning restore SYSLIB0011
-                    using (FileStream fs = File.Open(ofdReportFileOpen.FileName, FileMode.Open, FileAccess.Read)) {
-                        listCarReports = (BindingList<CarReport>)bf.Deserialize(fs);
-                        dgvRecords.DataSource = listCarReports;
-                    }
-                    //コンボボックスの履歴をすべて消す
-                    cbAuthor.Items.Clear();
-                    cbCarName.Items.Clear();
-                    foreach(var report in listCarReports) {
-                        SetCbAuthor(report.Author);
-                        SetCbCarName(report.CarName);
-                    }
-                }
-                catch (Exception ex) {
-                    tsslbMessage.Text = "ファイル読み出しエラー";
-                    MessageBox.Show(ex.Message);
-                }
-            }
-
-
-
-        }
-
-        
+            //using (var writer = XmlWriter.Create("setting.xml")) {
+            //    var serializer = new XmlSerializer(Settings.Instance.GetType());
+            //    serializer.Serialize(writer, Settings.Instance);
+            //}
+        }      
     }
 }

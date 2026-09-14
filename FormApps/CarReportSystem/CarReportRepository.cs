@@ -12,7 +12,7 @@ namespace SQLiteProductSample;
 //CRUD (Create / Read / Update / Delete) を担当する
 public class CarReportRepository
 {
-    //
+    //全レポートを取得する。Read(SELECT)に相当する
     public List<CarReport> GetAll() {
 
         var carReports = new List<CarReport>();
@@ -36,16 +36,17 @@ public class CarReportRepository
 
         while (reader.Read()) {
             carReports.Add(new CarReport {
-                Id = reader.GetInt32(0),    //0列目:Id
+                Id = reader.GetInt32(0),    
                 Date = DateTime.ParseExact(
                     reader.GetString(1),
-                    "yyyy-mm-dd",
+                    "yyyy-MM-dd",
                     CultureInfo.InvariantCulture),
                 Author = reader.GetString(2),
                 Maker = (CarReport.MakerGroup)reader.GetInt32(3),
                 CarName = reader.GetString(4),
                 Report = reader.GetString(5),
-                //Picture = 
+                Picture = reader.IsDBNull(6)
+                            ? null : BytesToImage(reader.GetFieldValue<byte[]>(6))
             });
         }
         return carReports;
@@ -53,7 +54,7 @@ public class CarReportRepository
 
     //商品を1件追加する。Create（INSERT）に相当する
     //戻り値として自動採番されたIdを返す
-    public int Add(string name, int price) {
+    public int Add(CarReport carReport) {
         //接続オブジェクトを生成する。
         using var connection = Database.GetConnection();
         connection.Open();
@@ -69,8 +70,7 @@ public class CarReportRepository
             SELECT last_insert_rowid();
             """;
 
-        command.Parameters.AddWithValue("$name", name);
-        command.Parameters.AddWithValue("$price", price);
+        SetCommandParameters(carReport, command);
 
         //結果行を返さないSQLを実行する
         var result = command.ExecuteScalar();
@@ -83,28 +83,54 @@ public class CarReportRepository
         
     }
 
-    public void Update(Product product) {
+
+    public void Update(CarReport carReport) {
         //接続オブジェクトを生成する。
         using var connection = Database.GetConnection();
         connection.Open();
         using var command = connection.CreateCommand();
 
+
+
         command.CommandText =
             """
-            UPDATE Products
-            SET Name = $name,
-                Price = $price
+            UPDATE CarReports
+            SET Date = $date, Author = $author, Maker = $maker,
+                CarName = $carName, Report = $report, Picture = $picture
             WHERE Id = $id;
             """;
 
-        command.Parameters.AddWithValue("$name", product.Name);
-        command.Parameters.AddWithValue("$price", product.Price);
-        command.Parameters.AddWithValue("id", product.Id);
+        command.Parameters.AddWithValue("$date", carReport.Date.ToString("yyyy-MM-dd"));
+        command.Parameters.AddWithValue("$author", carReport.Author);
+        command.Parameters.AddWithValue("$maker", carReport.Maker);
+        command.Parameters.AddWithValue("$carName", carReport.CarName);
+        command.Parameters.AddWithValue("$report", carReport.Report);
+        command.Parameters.AddWithValue("$picture", ImageToBytes(carReport.Picture));
+        command.Parameters.AddWithValue("$id", carReport.Id);
 
         //更新件数が0なら対象が存在しない
         if (command.ExecuteNonQuery() == 0)
-            throw new InvalidOperationException("修正対象の商品が見つかりませんでした。");
+            throw new InvalidOperationException("修正対象のレポートが見つかりませんでした。");
     }
+
+    private static void SetCommandParameters(CarReport carReport, SqliteCommand command) {
+        command.Parameters.AddWithValue("$date", carReport.Date.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
+        command.Parameters.AddWithValue("$author", carReport.Author);
+        command.Parameters.AddWithValue("$maker", carReport.Maker);
+        command.Parameters.AddWithValue("$carName", carReport.CarName);
+        command.Parameters.AddWithValue("$report", carReport.Report);
+
+        //Image型の画像を、SQLiteへ保存できるbyte配列に変換する
+        byte[]? pictureData = ImageToBytes(carReport.Picture);
+        //$picture パラメータをBLOB型として追加する
+        var pictureParameter = command.Parameters.Add("$picture", SqliteType.Blob);
+        if (pictureData is not null) {
+            pictureParameter.Value = pictureData;
+        } else {
+            pictureParameter.Value = DBNull.Value;
+        }
+    }
+    　　
 
     public void Delete(int id) {
         using var connection = Database.GetConnection();
@@ -113,7 +139,7 @@ public class CarReportRepository
         using var command = connection.CreateCommand();
         command.CommandText =
             """
-            DELETE FROM Products
+            DELETE FROM CarReports
             WHERE Id = $id;
             """;
 
@@ -138,4 +164,5 @@ public class CarReportRepository
         // MemoryStream破棄後も利用できるようBitmapとしてコピーする。
         return new Bitmap(image);
     }
+
 }
