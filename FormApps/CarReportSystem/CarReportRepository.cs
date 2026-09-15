@@ -105,7 +105,7 @@ public class CarReportRepository
         command.Parameters.AddWithValue("$maker", carReport.Maker);
         command.Parameters.AddWithValue("$carName", carReport.CarName);
         command.Parameters.AddWithValue("$report", carReport.Report);
-        command.Parameters.AddWithValue("$picture", ImageToBytes(carReport.Picture));
+        command.Parameters.AddWithValue("$picture", (object?)ImageToBytes(carReport.Picture) ?? DBNull.Value);
         command.Parameters.AddWithValue("$id", carReport.Id);
 
         //XVŒ”‚ª0‚È‚ç‘ÎÛ‚ª‘¶İ‚µ‚È‚¢
