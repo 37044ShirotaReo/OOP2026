@@ -6,11 +6,11 @@
 @model List<MvcBasicSample.Models.Product>;
 
 @{
-    ViewData["Title"] = "商品一覧";   //タブ用タイトル
+    ViewData["Title"] = "商品情報";   //タブ用タイトル
     int total = 0;
 }
 
-<h1>商品一覧</h1>   @*画面の見出し*@
+<h1>商品情報</h1>   @*画面の見出し*@
 <ul>
     @foreach(var product in Model){
         <li>@product.Name @product.Price 円</li>
