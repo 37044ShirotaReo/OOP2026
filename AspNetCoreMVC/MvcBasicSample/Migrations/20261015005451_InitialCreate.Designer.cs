@@ -11,7 +11,7 @@ using MvcBasicSample.Data;
 namespace MvcBasicSample.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20261007004335_InitialCreate")]
+    [Migration("20261015005451_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -37,6 +37,9 @@ namespace MvcBasicSample.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Price")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Stock")
                         .HasColumnType("int");
 
                     b.HasKey("Id");

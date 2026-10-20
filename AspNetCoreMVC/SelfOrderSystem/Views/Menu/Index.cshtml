@@ -24,7 +24,7 @@
     }
 </div>
 
-@* 商品一覧より上へ追加する：CartControllerから渡されたエラーがあれば表示する *@ 
+@* 商品一覧より上へ追加する：CartController から渡されたエラーがあれば表示する *@
 @if (TempData["Error"] is string errorMessage) {
     <div class="alert alert-danger">@errorMessage</div>
 }
@@ -59,7 +59,7 @@
     }
 </div>
 
-@* カートに商品があるときだけ合計数量・合計金額・リンクを表示する *@ 
+@* カートに商品があるときだけ合計数量・合計金額・リンクを表示する *@
 @if (Model.CartItemCount > 0) {
     <div class="alert alert-dark mt-3 d-flex justify-content-between align-items-center">
         <span>@Model.CartItemCount 点 / @Model.CartTotal.ToString("N0") 円</span>

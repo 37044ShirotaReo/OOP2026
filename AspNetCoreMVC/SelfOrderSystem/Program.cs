@@ -7,23 +7,21 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-//追加
-builder.Services.AddDbContext<AppDbContext>(options =>
-        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+// 追加
+builder.Services.AddDbContext<AppDbContext>(
+        options =>options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
     );
 /////////
-///
 
-builder.Services.AddDistributedMemoryCache(); // Sessionの保存領域としてアプリのメモリを使う
-builder.Services.AddSession(options => // Session機能を登録 
+builder.Services.AddDistributedMemoryCache(); // Session の保存領域としてアプリのメモリを使う
+builder.Services.AddSession(options => // Session 機能を登録
 {
-    options.IdleTimeout = TimeSpan.FromHours(2); // 2時間操作がなければ期限切れ 
-    options.Cookie.HttpOnly = true; // JavaScriptからSession IDを読めないようにする
-    options.Cookie.IsEssential = true; // Session ID用Cookieを必須Cookieとして扱う
+    options.IdleTimeout = TimeSpan.FromHours(2);    // 2 時間操作がなければ期限切れ
+    options.Cookie.HttpOnly = true;                 // JavaScript からSession ID を読めないようにする
+    options.Cookie.IsEssential = true;              // Session ID 用Cookie を必須Cookie として扱う
 });
-
-builder.Services.AddHttpContextAccessor(); // Controller以外のクラスからHttpContextを取得できるようにする
-builder.Services.AddScoped<CartService>(); // CartServiceをDIへ登録しControllerで受け取れるようにする
+builder.Services.AddHttpContextAccessor(); // Controller 以外のクラスからHttpContext を取得できるようにする
+builder.Services.AddScoped<CartService>(); // CartService をDI へ登録しControllerで受け取れるようにする
 
 var app = builder.Build();
 
@@ -47,8 +45,8 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-//追加
-app.UseSession(); // このリクエストでSessionを使えるようにする
+// 追加
+app.UseSession(); // このリクエストでSession を使えるようにする
 /////////
 
 app.UseAuthorization();
