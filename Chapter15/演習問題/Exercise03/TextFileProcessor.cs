@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Exercise03 {
+namespace Exercise03;
     internal class TextFileProcessor {
         private ITextFileService _service;
 
@@ -16,9 +16,10 @@ namespace Exercise03 {
             _service.Initilize(filename);
             var lines = File.ReadLines(filename);
             foreach (var line in lines) {
-                _service.Execute(line);
+                if (!_service.Execute(line)) {
+                    break;
+                }
             }
             _service.Terminate();
         }
     }
-}
