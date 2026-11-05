@@ -1,22 +1,139 @@
-html {
-  font-size: 14px;
+/* ===============================
+   喫茶店風
+   =============================== */
+
+:root {
+    --cafe-bg: #f4ead9;
+    --cafe-main: #5c4033;
+    --cafe-dark: #3d2b1f;
+    --cafe-accent: #c69c6d;
+    --cafe-white: #fffdf8;
 }
 
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
-}
-
+/* 背景 */
 body {
-  margin-bottom: 60px;
+    background-color: var(--cafe-bg);
+    color: #333;
+    font-family: "Yu Gothic UI", "Meiryo", sans-serif;
+}
+
+/* ヘッダー */
+.navbar {
+    background-color: var(--cafe-main) !important;
+    border-bottom: 4px solid var(--cafe-accent);
+}
+
+.navbar-brand,
+.nav-link {
+    color: white !important;
+    font-weight: 600;
+}
+
+    .nav-link:hover {
+        color: #ffe4b5 !important;
+    }
+
+/* タイトル */
+h1, h2, h3 {
+    color: var(--cafe-main);
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+    h1::after,
+    h2::after {
+        content: "";
+        display: block;
+        width: 80px;
+        height: 3px;
+        background-color: var(--cafe-accent);
+        margin-top: 8px;
+    }
+
+/* カード */
+.card {
+    border: none;
+    border-radius: 15px;
+    background-color: var(--cafe-white);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+    transition: 0.3s;
+}
+
+    .card:hover {
+        transform: translateY(-3px);
+    }
+
+    /* メニュー画像 */
+    .card img {
+        border-radius: 15px 15px 0 0;
+        object-fit: cover;
+    }
+
+/* 金額表示 */
+.price {
+    color: #a52a2a;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+/* ボタン */
+.btn-primary {
+    background-color: var(--cafe-main);
+    border-color: var(--cafe-main);
+    border-radius: 30px;
+    font-weight: bold;
+}
+
+    .btn-primary:hover {
+        background-color: var(--cafe-dark);
+        border-color: var(--cafe-dark);
+    }
+
+/* 入力欄 */
+.form-control,
+.form-select {
+    border-radius: 10px;
+    border: 1px solid #cbb79f;
+}
+
+    .form-control:focus,
+    .form-select:focus {
+        border-color: var(--cafe-accent);
+        box-shadow: 0 0 5px rgba(198,156,109,0.4);
+    }
+
+/* テーブル */
+.table {
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+    .table thead {
+        background-color: var(--cafe-main);
+        color: white;
+    }
+
+/* フッター */
+.footer {
+    background-color: var(--cafe-main);
+    color: white;
+    text-align: center;
+    padding: 15px;
+}
+
+/* 注文一覧 */
+.order-panel {
+    background-color: #fffaf3;
+    border-left: 5px solid var(--cafe-accent);
+    padding: 15px;
+    border-radius: 10px;
+}
+
+/* メニューカード */
+.menu-card {
+    background-color: #fffdf8;
+    border: 1px solid #e8d9c4;
+    padding: 15px;
+    border-radius: 15px;
 }
