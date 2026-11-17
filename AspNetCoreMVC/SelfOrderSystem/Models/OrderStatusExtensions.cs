@@ -9,6 +9,7 @@ public static class OrderStatusExtensions {
             _ => "不明"
         };
     }
+
     public static string NextActionLabel(this OrderStatus status) {
         return status switch {
             OrderStatus.New => "受付する",
@@ -17,6 +18,4 @@ public static class OrderStatusExtensions {
             _ => "完了"
         };
     }
-
-
 }
