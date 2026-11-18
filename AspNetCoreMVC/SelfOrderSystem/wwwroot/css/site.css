@@ -1,47 +1,149 @@
-html {
-  font-size: 14px;
-}
+/* ==========================
+   神秘的デザインテーマ
+   ========================== */
 
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
-}
-
+/* 画面全体 */
 body {
-  margin-bottom: 60px;
+    background: radial-gradient(circle at top, rgba(138, 43, 226, 0.25), transparent 50%), linear-gradient(135deg, #080b1f, #101632, #18113b);
+    color: #f5f0ff;
+    font-family: "Yu Gothic UI", sans-serif;
+    min-height: 100vh;
 }
 
-/* 商品写真を一定の高さで表示 */
-.so-product-photo {
+/* ナビゲーションバー */
+.navbar {
+    background: rgba(15, 20, 50, 0.9) !important;
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(180, 120, 255, 0.4);
+    box-shadow: 0 0 20px rgba(130, 80, 255, 0.4);
+}
+
+.navbar-brand,
+.nav-link {
+    color: #f2eaff !important;
+    transition: all 0.3s;
+}
+
+    .nav-link:hover {
+        color: #d9b3ff !important;
+        text-shadow: 0 0 10px #c084fc;
+    }
+
+/* カード */
+.card {
+    background: rgba(22, 26, 58, 0.85);
+    border: 1px solid rgba(180, 120, 255, 0.3);
+    border-radius: 20px;
+    color: #ffffff;
+    backdrop-filter: blur(6px);
+    box-shadow: 0 0 12px rgba(140, 90, 255, 0.4), 0 0 25px rgba(100, 50, 255, 0.2);
+}
+
+/* カードタイトル */
+.card-title {
+    color: #e9d5ff;
+    text-shadow: 0 0 8px rgba(210, 170, 255, 0.8);
+}
+
+/* ボタン */
+.btn-primary {
+    background: linear-gradient(135deg, #7c3aed, #9333ea);
+    border: none;
+    color: white;
+    box-shadow: 0 0 10px rgba(147, 51, 234, 0.5);
+}
+
+    .btn-primary:hover {
+        background: linear-gradient(135deg, #9333ea, #c084fc);
+        transform: translateY(-2px);
+        box-shadow: 0 0 20px rgba(192, 132, 252, 0.8);
+    }
+
+/* 入力欄 */
+.form-control,
+.form-select {
+    background-color: rgba(25, 30, 60, 0.9);
+    color: #ffffff;
+    border: 1px solid #7c3aed;
+}
+
+    .form-control:focus,
+    .form-select:focus {
+        background-color: rgba(30, 35, 70, 1);
+        color: white;
+        border-color: #c084fc;
+        box-shadow: 0 0 10px rgba(192, 132, 252, 0.7);
+    }
+
+/* テーブル */
+.table {
+    color: #ffffff;
+}
+
+    .table thead {
+        background: rgba(124, 58, 237, 0.4);
+    }
+
+    .table tbody tr {
+        background: rgba(20, 25, 50, 0.7);
+    }
+
+        .table tbody tr:hover {
+            background: rgba(90, 40, 180, 0.5);
+        }
+
+/* 見出し */
+h1, h2, h3, h4 {
+    color: #f3e8ff;
+    text-shadow: 0 0 10px rgba(192, 132, 252, 0.7);
+}
+
+/* フッター */
+footer {
+    background: rgba(15, 20, 50, 0.8);
+    color: #d8c8ff;
+    border-top: 1px solid rgba(180, 120, 255, 0.3);
+}
+
+/* 魔法の発光演出 */
+.glow {
+    animation: mysticGlow 3s infinite alternate;
+}
+
+@keyframes mysticGlow {
+    from {
+        text-shadow: 0 0 5px #c084fc, 0 0 10px #c084fc;
+    }
+
+    to {
+        text-shadow: 0 0 15px #e9d5ff, 0 0 30px #c084fc, 0 0 50px #9333ea;
+    }
+}
+
+/* カード */
+.card {
+    background: rgba(14, 20, 48, 0.75
+    /* 商品写真を一定の高さで表示 */
+    .so-product-photo {
     display: block;
     width: 100%;
     height: 190px;
     object-fit: cover;
     background: #f0eee9;
-}
-/* 写真の登録がない商品に表示 */
-.so-product-photo--empty {
+    }
+    /* 写真の登録がない商品に表示 */
+    .so-product-photo--empty {
     display: flex;
     align-items: center;
     justify-content: center;
     color: #666;
     font-size: 0.95rem;
-}
-
-/* PCではカートをスクロールに追従させる */
-@media (min-width: 992px){
+    }
+    /* PCではカートをスクロールに追従させる */
+    @media (min-width: 992px){
     .so-cart-sidebar {
         position: sticky;
         top: 90px;
+        }
     }
 }
